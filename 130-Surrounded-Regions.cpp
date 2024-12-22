@@ -30,6 +30,7 @@ public:
         }
     }
     void solve(vector<vector<char>>& grid) {
+        ios_base::sync_with_stdio(false);
         int m = grid.size(), n = grid[0].size();
         int y = m * n + 1;
         set__(y + 2);
