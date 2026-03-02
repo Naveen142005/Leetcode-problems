@@ -1,81 +1,73 @@
 1class Solution {
-2public:
-3    int minSwaps(vector<vector<int>>& grid) {
-4        int n = grid.size();
-5
-6        int tt = n - 1;
-7        // while (tt > 0) {
-8        //     int cnt = 0;
-9        //     for (int i = 0; i < n; i += 1) {
-10        //         if (grid[i][tt] == 0) cnt += 1;
-11        //         if (cnt >= tt) break;
-12        //     }
-13        //     if (cnt < tt) return -1;
-14        //     tt -= 1;
-15        // }
-16        // for(auto i:grid){
-17        //     for(auto j:i) cout<<j<<" ";
-18        //     cout<<'\n';
-19        // }
-20        int mx = 0;
-21        unordered_map<int, vector<int>> mp;
-22
-23        for (int i = 0; i < n; i += 1)
-24            mp[i] = grid[i];
-25
-26        for (int i = 0; i < n; i += 1) {
-27            vector<int>& temp = mp[i];
-28            bool isAllZero = true;
-29            for (int x = n - 1; x >= i + 1; x -= 1) {
-30                if (temp[x] != 0) {
-31                    //  cout << x << '\n';
-32                    isAllZero = false;
-33                    break;
-34                }
-35            }
-36
-37            if (!isAllZero) {
-38
-39                for (int xx = i + 1; xx < n; xx += 1) {
-40                    bool isOk = true;
-41                    vector<int>& trav = mp[xx];
-42                    for (int yy = n - 1; yy >= i + 1; yy -= 1) {
-43                        if (trav[yy] != 0) {
-44                            isOk = false;
-45                            break;
-46                        }
-47                    }
-48                    // cout << isOk;
-49                    if (isOk) {
-50                        int st = i;
-51                        int end = xx;
-52
-53                        vector<int> endarr = mp[end];
-54
-55                        for (int pp = end; pp > st; pp -= 1) {
-56                            mp[pp] = mp[pp - 1];
-57                        }
-58                        mp[st] = endarr;
-59                        // cout << end << " " << st << endl;
-60                        mx += (end - st);
-61                        break;
-62                    }
-63                }
-64            }
-65        }
-66
-67        for (int i = 0; i < n; i += 1) {
-68            vector<int>& temp = mp[i];
-69            bool isAllZero = true;
-70            for (int x = n - 1; x >= i + 1; x -= 1) {
-71                if (temp[x] != 0) {
-72                    // isAllZero = false;
-73                    // break;
-74                    return -1;
-75                }
-76            }
-77        }
-78
-79        return mx;
-80    }
-81};
+2    public int minSwaps(int[][] grid) {
+3        int n = grid.length;
+4
+5        int tt = n - 1;
+6        // while (tt > 0) {
+7        //     int cnt = 0;
+8        //     for (int i = 0; i < n; i += 1) {
+9        //         if (grid[i][tt] == 0) cnt += 1;
+10        //         if (cnt >= tt) break;
+11        //     }
+12        //     if (cnt < tt) return -1;
+13        //     tt -=1;
+14        // }
+15
+16        int mx = 0;
+17        HashMap<Integer, int[]> mp = new HashMap<>();
+18
+19        for (int i = 0; i < n; i += 1) 
+20            mp.put(i, grid[i]);
+21        
+22        for (int i = 0; i < n; i += 1) {
+23            int [] temp = mp.get(i);
+24            Boolean isAllZero = true; 
+25            for (int x = n - 1; x >= i + 1; x -= 1) {
+26                if (temp[x] != 0) {
+27                    isAllZero = false;
+28                    break;
+29                }
+30            }
+31
+32            if (!isAllZero) {
+33            
+34                for (int xx = i + 1; xx < n; xx += 1) {
+35                    Boolean isOk = true;
+36                    for (int yy = n - 1; yy >= i + 1; yy -= 1) {
+37                        if (mp.get(xx)[yy] != 0) {
+38                            isOk = false;
+39                            // System.out.println(xx + " " + yy);
+40                            break;
+41                        }
+42                    }
+43                    if (isOk) {
+44                        int st = i;
+45                        int end = xx;
+46
+47                        int[] endarr = mp.get(end);
+48    
+49                        for (int pp = end; pp > st; pp -= 1) {
+50                            mp.put(pp, mp.get(pp - 1));
+51                        }
+52                        mp.put(st, endarr);
+53                        // System.out.println(end + " " + st);
+54                        mx += (end - st);
+55                        break;
+56                    }
+57                }
+58            }
+59
+60        }
+61        for (int i = 0; i < n; i += 1) {
+62            int [] temp = mp.get(i);
+63            Boolean isAllZero = true; 
+64            for (int x = n - 1; x >= i + 1; x -= 1) {
+65                if (temp[x] != 0) {
+66                   return -1;
+67                }
+68            }
+69        }
+70        
+71        return mx;
+72    }
+73}
