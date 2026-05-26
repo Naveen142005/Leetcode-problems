@@ -13,7 +13,7 @@
 13
 14        for (auto& i: word) {
 15            if (isupper(i)) {
-16                if (fq[i - 'A'] <= fq1[i - 'A'] && fq[i - 'A'] && fq1[i - 'A']) {
+16                if (fq[i - 'A'] <= fq1[i - 'A'] && fq[i - 'A']) {
 17                    cnt += 1;
 18                }
 19                fq[i - 'A'] = 0;
