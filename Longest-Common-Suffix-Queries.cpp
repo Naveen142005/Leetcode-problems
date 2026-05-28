@@ -49,47 +49,45 @@
 49    }
 50
 51    void destroy(node* temp) {
-52
-53    if (!temp) return;
-54
-55    for (int i = 0; i < 26; i++) {
-56        destroy(temp->children[i]);
+52        if (!temp) 
+53            return;
+54        for (int i = 0; i < 26; i += 1) 
+55            destroy(temp->children[i]);
+56        delete temp;
 57    }
 58
-59    delete temp;
-60}
-61
-62    ~Trie() {
-63        destroy(root);
-64    }
-65};
-66
-67class Solution {
-68public:
-69    vector<int> stringIndices(vector<string>& wordsContainer, vector<string>& wordsQuery) {
-70        Trie obj;
-71        
-72        int n = wordsContainer.size();
-73        int mx = INT_MAX;
-74        int smallidx = INT_MAX;
-75        for (int i = 0; i < n; i += 1) {
-76            obj.insert(wordsContainer[i], i);
-77            int x = wordsContainer[i].size();
-78            if (mx > x) {
-79                mx = x;
-80                smallidx = i;
-81            }
-82        }
-83        
-84        int qn = wordsQuery.size();
-85        vector <int> ans (qn, 0);
-86
-87        int xxx = 0;
-88
-89        for (auto& i: wordsQuery) {
-90            int res = obj.startsWith(i);
-91            ans[xxx++] = (res == -1) ? smallidx: res;
-92        }
-93        return ans;
-94    }
-95};
+59    void d() {
+60        destroy(root);
+61    }
+62};
+63
+64class Solution {
+65public:
+66    vector<int> stringIndices(vector<string>& wordsContainer, vector<string>& wordsQuery) {
+67        Trie obj;
+68        
+69        int n = wordsContainer.size();
+70        int mx = INT_MAX;
+71        int smallidx = INT_MAX;
+72        for (int i = 0; i < n; i += 1) {
+73            obj.insert(wordsContainer[i], i);
+74            int x = wordsContainer[i].size();
+75            if (mx > x) {
+76                mx = x;
+77                smallidx = i;
+78            }
+79        }
+80        
+81        int qn = wordsQuery.size();
+82        vector <int> ans (qn, 0);
+83
+84        int xxx = 0;
+85
+86        for (auto& i: wordsQuery) {
+87            int res = obj.startsWith(i);
+88            ans[xxx++] = (res == -1) ? smallidx: res;
+89        }
+90        obj.d() ;
+91        return ans;
+92    }
+93};
